@@ -1,0 +1,23 @@
+
+
+CREATE TABLE categories (
+  id UUID PRIMARY KEY,
+  name VARCHAR(50) UNIQUE NOT NULL
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
+  deleted_at INTEGER DEFAULT 0
+  
+);
+
+CREATE TABLE contacts (
+  id UUID PRIMARY KEY,
+  phone VARCHAR(20) UNIQUE NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  address VARCHAR(50),
+  category UUID NOT NULL,
+  FOREIGN KEY (category) REFERENCES categories(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
+  deleted_at INTEGER DEFAULT 0 
+);

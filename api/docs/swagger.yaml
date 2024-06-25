@@ -1,0 +1,578 @@
+definitions:
+  model.Categories:
+    properties:
+      name:
+        type: string
+    type: object
+  model.Contact:
+    properties:
+      address:
+        type: string
+      category:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  model.ContactHistory:
+    properties:
+      address:
+        type: string
+      category:
+        type: string
+      change_type:
+        type: string
+      changed_at:
+        type: string
+      contact_id:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  model.GetAllContact:
+    properties:
+      Email:
+        type: string
+      Name:
+        type: string
+      address:
+        type: string
+      category:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      phone:
+        type: string
+    type: object
+  model.GetAllContactResponse:
+    properties:
+      contact:
+        items:
+          $ref: '#/definitions/model.GetAllContact'
+        type: array
+      count:
+        type: integer
+    type: object
+  model.GetAllcategoriesResponse:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/model.Getcategoriest'
+        type: array
+      count:
+        type: integer
+    type: object
+  model.Getcategoriest:
+    properties:
+      Name:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+    type: object
+  model.PatchContact:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      phone:
+        type: string
+    type: object
+  model.Patchcategories:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  model.Response:
+    properties:
+      data: {}
+      description:
+        type: string
+      statusCode:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves information about all categories.
+      parameters:
+      - description: categories
+        in: query
+        name: search
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetAllcategoriesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all categories
+      tags:
+      - categories
+    patch:
+      consumes:
+      - application/json
+      description: Update a new categories
+      parameters:
+      - description: categories
+        in: body
+        name: categories
+        required: true
+        schema:
+          $ref: '#/definitions/model.Patchcategories'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Getcategoriest'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Update a categories
+      tags:
+      - categories
+    post:
+      consumes:
+      - application/json
+      description: Create a new categories
+      parameters:
+      - description: categories
+        in: body
+        name: categories
+        required: true
+        schema:
+          $ref: '#/definitions/model.Categories'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Categories'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a categories
+      tags:
+      - categories
+  /categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api deletes a categories by its id and returns error or nil
+      parameters:
+      - description: categories ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: deletehard a user by its id
+      tags:
+      - categories
+    get:
+      consumes:
+      - application/json
+      description: This api gets a categories by its id and returns its info
+      parameters:
+      - description: categories
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Getcategoriest'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: get a categories by its id
+      tags:
+      - categories
+  /categories_s/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api deletes a categories by its id and returns error or nil
+      parameters:
+      - description: categories ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: deletesoft a user by its id
+      tags:
+      - categories
+  /contact:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves information about all contact.
+      parameters:
+      - description: contact
+        in: query
+        name: search
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetAllContactResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all contact
+      tags:
+      - contact
+    patch:
+      consumes:
+      - application/json
+      description: Update a new contact
+      parameters:
+      - description: contact
+        in: body
+        name: contact
+        schema:
+          $ref: '#/definitions/model.PatchContact'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetAllContact'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Update a contact
+      tags:
+      - contact
+    post:
+      consumes:
+      - application/json
+      description: Create a new contact
+      parameters:
+      - description: contact
+        in: body
+        name: contact
+        required: true
+        schema:
+          $ref: '#/definitions/model.Contact'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Contact'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a contact
+      tags:
+      - contact
+  /contact/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api deletes a contact by its id and returns error or nil
+      parameters:
+      - description: contact ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: deletehard a user by its id
+      tags:
+      - contact
+    get:
+      consumes:
+      - application/json
+      description: This api gets a contact by its id and returns its info
+      parameters:
+      - description: contact
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetAllContact'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: get a contact by its id
+      tags:
+      - contact
+  /contact/history/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This api gets a contact by its id and returns its info
+      parameters:
+      - description: contact
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ContactHistory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: get a contact_history by its id
+      tags:
+      - contact
+  /contact_s/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api deletes a contact by its id and returns error or nil
+      parameters:
+      - description: contact ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: deletesoft a user by its id
+      tags:
+      - contact
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
