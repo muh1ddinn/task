@@ -570,6 +570,56 @@ paths:
       summary: deletesoft a user by its id
       tags:
       - contact
+  /contacts/export/csv:
+    get:
+      description: Export contacts to a CSV file
+      produces:
+      - text/csv
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Export contacts to CSV
+      tags:
+      - contacts
+  /contacts/import:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Import contacts from a CSV file
+      parameters:
+      - description: CSV file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully imported
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Import contacts from CSV
+      tags:
+      - contacts
 securityDefinitions:
   ApiKeyAuth:
     in: header

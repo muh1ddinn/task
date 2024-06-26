@@ -62,6 +62,42 @@ func (c *contactRepro) Create(ctx context.Context, contact model.Contact) (model
 	return a, nil
 }
 
+func (c *contactRepro) Createcsv(ctx context.Context, contact model.GetAllContact) (model.GetAllContact, error) {
+
+	query := `INSERT INTO contact(
+	id,
+	phone,
+	name,
+	email,
+	address,
+	Category,
+	created_at
+) VALUES($1, $2, $3, $4, $5, $6,$7)`
+
+	_, err := c.db.Exec(ctx, query,
+		contact.Id,
+		contact.Phone,
+		contact.Name,
+		contact.Email,
+		contact.Address,
+		contact.Category,
+		time.Now(),
+	)
+	fmt.Println(err)
+	if err != nil {
+		//c.logger.Error("error while creating user:", logger.Error(err))
+		return model.GetAllContact{}, err
+	}
+
+	a, err := c.GetByID(ctx, contact.Id)
+	if err != nil {
+		log.Println("error while getting category by id")
+		return a, err
+	}
+
+	return a, nil
+}
+
 func (c *contactRepro) GetByID(ctx context.Context, id string) (model.GetAllContact, error) {
 
 	contact := model.GetAllContact{}

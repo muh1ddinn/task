@@ -35,10 +35,14 @@ func New(services service.IServiceMangaer, log logger.ILogger) *gin.Engine {
 	r.POST("/contact", h.Create)
 	r.GET("/contact/:id", h.GetByID)
 	r.GET("/contact", h.Getall)
-	r.GET("/contact/history/:id", h.History)
 	r.DELETE("/contact/:id", h.Deletehard)
 	r.PATCH("/contact", h.Patch)
 	r.DELETE("contact_s/:id", h.Deletesoft)
+
+	r.GET("/contact/history/:id", h.History)
+
+	r.GET("/contacts/export/csv", h.ExportToCSV)
+	r.POST("/contacts/import", h.ImportContacts)
 
 	r.POST("/categories", h.Createcat)
 	r.GET("/categories/:id", h.GetByIDcat)

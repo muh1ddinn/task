@@ -2,7 +2,9 @@ package service
 
 import (
 	"context"
+	"encoding/csv"
 	"fmt"
+	"io"
 	"task/api/model"
 	"task/pkg/logger"
 	"task/pkg/validate"
@@ -111,4 +113,53 @@ func (s contactser) History(ctx context.Context, id string) ([]model.ContactHist
 	}
 
 	return users, nil
+}
+
+func (s contactser) ImportContacts(ctx context.Context, file io.Reader) error {
+	contacts, err := s.parseCSV(file)
+	if err != nil {
+		return err
+	}
+
+	for _, contact := range contacts {
+		if _, err := s.storage.Contacts().Createcsv(ctx, contact); err != nil {
+			s.logger.Error("Error importing contact", logger.Error(err))
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (s contactser) parseCSV(file io.Reader) ([]model.GetAllContact, error) {
+	reader := csv.NewReader(file)
+	var contacts []model.GetAllContact
+
+	// Read header
+	_, err := reader.Read()
+	if err != nil {
+		return nil, fmt.Errorf("error reading CSV header: %v", err)
+	}
+
+	// Read rows
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return nil, fmt.Errorf("error reading CSV row: %v", err)
+		}
+
+		contact := model.GetAllContact{
+			Id:       record[0],
+			Phone:    record[1],
+			Name:     record[2],
+			Email:    record[3],
+			Address:  record[4],
+			Category: record[5],
+		}
+		contacts = append(contacts, contact)
+	}
+	return contacts, nil
 }

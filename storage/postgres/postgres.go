@@ -43,13 +43,19 @@ func (s Store) CloseDB() {
 }
 
 func (s Store) Contacts() storage.IContactStorage {
-	Newuser := Newcontact(s.Pool, s.logger)
+	Newcontact := Newcontact(s.Pool, s.logger)
 
-	return &Newuser
+	return &Newcontact
 }
 
 func (s Store) Categories() storage.ICategoriestStorage {
 	NewCategories := NewCategories(s.Pool, s.logger)
 
 	return &NewCategories
+}
+
+func (s Store) Contactcsv() storage.IContactcsvtStorage {
+	Newcontact := NewExportStorage(s.Pool, s.logger)
+
+	return &Newcontact
 }

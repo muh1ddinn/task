@@ -9,10 +9,12 @@ type IStorage interface {
 	CloseDB()
 	Contacts() IContactStorage
 	Categories() ICategoriestStorage
+	Contactcsv() IContactcsvtStorage
 }
 
 type IContactStorage interface {
 	Create(context.Context, model.Contact) (model.GetAllContact, error)
+	Createcsv(context.Context, model.GetAllContact) (model.GetAllContact, error)
 	GetAll(context.Context, model.GetAllContactRequest) (model.GetAllContactResponse, error)
 	Delete(context.Context, string) (string, error)
 	SoftDelete(context.Context, string) (string, error)
@@ -30,4 +32,8 @@ type ICategoriestStorage interface {
 	GetByIDcat(context.Context, string) (model.Getcategoriest, error)
 	Patchcat(context.Context, model.Patchcategories) (model.Getcategoriest, error)
 	Checkname(context.Context, string) (string, error)
+}
+
+type IContactcsvtStorage interface {
+	ExportToCSV(context.Context, string, string) error
 }
